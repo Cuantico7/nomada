@@ -8,12 +8,53 @@ print_r("<pre>");
 print_r($c);
 */
 
-$u = new modeloUsuarios();
+/*$u = new modeloUsuarios();
 $misdatos= $u->getAllUsuarios();
 
 print_r("<pre>");
 print_r($misdatos);
 
+$resultado= $u->getById(1);
+print_r("<pre>");
+print_r($resultado);
+*/
+extract($_REQUEST);
+/*print_r("<PRE>");
+print_r($_REQUEST);*/
+
+
+
+if (!isset($action)) {
+    //print_r("No se ha envaido un evento a ejecutar");
+    $response = [
+        "result" => "bad",
+        "data" => "",
+        "message" => "No se ha enviado un evento a ejecutar"
+    ];
+    print_r(json_encode($response));
+    //require_once "vista/login.php";
+}else {
+    switch ($action) {
+
+        case "usuarios":
+            //print_r("Voy a consutar un usuario :)");
+            $u = new modeloUsuarios();
+            $misdatos= $u->getAllUsuarios();
+            print_r("<pre>");
+            print_r(json_encode($misdatos));
+
+            break;
+         case 'buscarUsuarios':
+            # code...
+            break;  
+
+            default:
+            print_r("peticion invalida");
+
+
+        }
+
+    }
 
 
 
