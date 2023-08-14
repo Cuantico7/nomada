@@ -1,7 +1,9 @@
 <?php
+require_once "control/controlUsuarios.php";
 require_once "bd/mysql.php";
 require_once "config/db.inc";
 require_once "modelo/modeloUsuarios.php";
+
 /*$c= new mysql();
 $c->conectar();
 print_r("<pre>");
@@ -44,11 +46,20 @@ if (!isset($action)) {
             print_r(json_encode($misdatos));
 
             break;
-         case 'buscarUsuarios':
+         case 'buscarUsuario':
             # code...
-            break;  
+            $u = new modeloUsuarios();
+            $misdatos= $u->getUserById($id);
+            print_r(json_encode($misdatos));
+            break;
+         case 'autenticar':
+                # code...
+                $u = new controlUsuarios();
+                $misdatos= $u->login($email,$password);
+                print_r(json_encode($misdatos));
+                break;  
 
-            default:
+         default:
             print_r("peticion invalida");
 
 

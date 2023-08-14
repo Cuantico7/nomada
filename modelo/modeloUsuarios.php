@@ -8,7 +8,7 @@ class modeloUsuarios
     function __construct()
     {
         $con = new mysql();
-        $this->conexion = $con->conectar();
+        $this->conexion = $con->getConexion();
     }
 
     public function getAllUsuarios()
@@ -22,7 +22,7 @@ class modeloUsuarios
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function getById($id)
+    public function getUserById($id)
     {
         $sql = "SELECT * FROM usuarios WHERE id_usuario = $id";
 
@@ -30,4 +30,25 @@ class modeloUsuarios
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
+    public function validateUserCredentials($email,$password)
+    {
+        $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$email' AND contraseña = '$password'";
+
+        $result = $this->conexion->query($sql);
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+
+    }
+
+    public function getUserByEmail($email)
+    {
+        $sql = "SELECT * FROM usuarios WHERE id_usuario = $email";
+
+        $result = $this->conexion->query($sql);
+
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    
 }
