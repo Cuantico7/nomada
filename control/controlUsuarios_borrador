@@ -1,32 +1,4 @@
-<?php
 
-
-class controlUsuarios
-{
-    var $modelo;
-
-    function __construct()
-    {
-        $this->modelo = new modeloUsuarios();
-    }
-
-    public function login($email, $password)
-    {
-        if (
-            !empty($email) && $email != "" && $email != NULL &&
-            !empty($password) && $password != "" && $password != NULL
-        ) {
-            $result = $this->modelo->validateUserCredentials($email, md5($password));
-
-            if (is_array($result) && count($result) > 0) {
-                return $result;
-            } else
-                return 1;
-        } else {
-            return 0;
-        }
-    }
-}
 
 /*class controlUsuarios
 {

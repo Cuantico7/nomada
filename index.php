@@ -4,52 +4,37 @@ require_once "bd/mysql.php";
 require_once "config/db.inc";
 require_once "modelo/modeloUsuarios.php";
 
-/*$c= new mysql();
-$c->conectar();
-print_r("<pre>");
-print_r($c);
-*/
-
-/*$u = new modeloUsuarios();
-$misdatos= $u->getAllUsuarios();
-
-print_r("<pre>");
-print_r($misdatos);
-
-$resultado= $u->getById(1);
-print_r("<pre>");
-print_r($resultado);
-*/
 extract($_REQUEST);
-/*print_r("<PRE>");
-print_r($_REQUEST);*/
 
 
 
 if (!isset($action)) {
     //print_r("No se ha envaido un evento a ejecutar");
-    $response = [
+    
+   $response = [
         "result" => "bad",
         "data" => "",
         "message" => "No se ha enviado un evento a ejecutar"
     ];
     print_r(json_encode($response));
     //require_once "vista/login.php";
+    require_once "vista/login.php";
+   
 }else {
     switch ($action) {
 
         case "usuarios":
             //print_r("Voy a consutar un usuario :)");
-            $u = new modeloUsuarios();
-            $misdatos= $u->getAllUsuarios();
+            $u = new controlUsuarios();
+            $misdatos= $u->mostrarUsuarios();
             print_r("<pre>");
             print_r(json_encode($misdatos));
 
             break;
          case 'buscarUsuario':
             # code...
-            $u = new modeloUsuarios();
-            $misdatos= $u->getUserById($id);
+            $u = new controlUsuarios();
+            $misdatos= $u->buscarUsuario($id);
             print_r(json_encode($misdatos));
             break;
          case 'autenticar':
@@ -59,8 +44,22 @@ if (!isset($action)) {
                 print_r(json_encode($misdatos));
                 break;  
 
+        case 'registrarUsuario':
+                $u = new controlUsuarios();
+                $misdatos= $u->registrarUsuario($nombre_usuario,$correo_electronico,$contrasenia,$estado);
+                print_r(json_encode($misdatos));
+                break;  
+
+                case 'actualizarUsuario':
+                    $u = new controlUsuarios();
+                    //$misdatos= $u->modeloUsuarios($id,$nombre_usuario, $correo_electronico, $estado);
+                    print_r(json_encode($misdatos));
+                    break;  
+                    
+
          default:
             print_r("peticion invalida");
+            
 
 
         }

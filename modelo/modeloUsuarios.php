@@ -33,7 +33,7 @@ class modeloUsuarios
 
     public function validateUserCredentials($email,$password)
     {
-        $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$email' AND contraseña = '$password'";
+        $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$email' AND contrasenia = '$password'";
 
         $result = $this->conexion->query($sql);
 
@@ -43,12 +43,49 @@ class modeloUsuarios
 
     public function getUserByEmail($email)
     {
-        $sql = "SELECT * FROM usuarios WHERE id_usuario = $email";
+        $sql = "SELECT * FROM usuarios WHERE correo_electronico = '$email'";
 
         $result = $this->conexion->query($sql);
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    
+
+    public function addUser($nombre_usuario,$correo_electronico,$contrasenia,$estado)
+    {
+        $sql = "INSERT INTO usuarios VALUES (NULL,'$nombre_usuario','$correo_electronico','$contrasenia',$estado)";
+
+        $result = $this->conexion->query($sql);
+
+        return $result;
+
+
+    }
+
+
+    public function updateUserRecord($id,$nombre_usuario,$correo_electronico,$estado)
+    {
+        $sql = "UPDATE usuarios SET nombre_usuario='$nombre_usuario',
+                                    correo_electronico='$correo_electronico',
+                                    estado='$estado 
+                                    WHERE id= $id";
+
+        $result = $this->conexion->query($sql);
+
+        return $result;
+    }
+
+
+    public function updatePasswordRecord($id,$contrasenia)
+    {
+        $sql = "UPDATE usuarios SET contrasenia='$contrasenia',
+                                    WHERE id= $id";
+        $result = $this->conexion->query($sql);
+
+        return $result;
+    }
+
+
+
+
 }

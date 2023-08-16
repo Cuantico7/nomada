@@ -13,12 +13,12 @@
     <form name="autenticar" action="index.php" method="POST">
         <div class="mb-3">
             <label for="" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" id="email" aria-describedby="helpId" placeholder="Ingrese el Email">
+            <input type="email" class="form-control" name="email" id="correo_electronico" aria-describedby="helpId" placeholder="Ingrese el Email">
 
         </div>
         <div class="mb-3">
             <label for="" class="form-label">Password</label>
-            <input type="password" class="form-control" name="password" id="password" aria-describedby="helpId" placeholder="Ingrese el Password">
+            <input type="password" class="form-control" name="password" id="contraseña" aria-describedby="helpId" placeholder="Ingrese el Password">
 
         </div>
         <input type="submit" value="Login">
