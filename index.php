@@ -4,7 +4,7 @@ require_once ".frontController.php";
 
 $o = new frontController();
 
-$o->assemble();
+$o->assembleRequest();
 
 
 
