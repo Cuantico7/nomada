@@ -1,4 +1,7 @@
 <?php
+
+use LDAP\Result;
+
 class frontController
 {
     private $action;
@@ -8,17 +11,35 @@ class frontController
         //echo "Hi Houstons we have a problem ...";
         //print_r($_REQUEST);
         if (isset($_REQUEST["url"])) {
-            //echo ("Hi Houston Ok");
-           // print_r($_REQUEST["url"]);
             $myUrl = explode("/", trim($_REQUEST["url"]));
-            //print_r("<pre>");
-            //print_r($myUrl);
+            $view=array_shift($myUrl);
+            if ($view=="api")
+            {
+                define("SENTINEL",true);
+
+            }
+            else{
+
+                define("SENTINEL",FALSE);
+            }
+            $COMPLEMENTO = $myUrl;
             $this->action = array_shift($myUrl);
-            //print_r("La accion : " .  $this->action );
-            //print_r($myUrl);
             $this->params = $myUrl;
-            $this->dispatcher($this->action,$this->params);
-        }else{
+            $resuslt=$this->dispatcher($this->action,$this->params);
+
+
+            if($resuslt["result"] == "fail")
+            {
+                $result["view"] = "defaulError";
+            }
+
+            if(SENTINEL)
+            print_r(json_encode($result));
+            else //Es un famado para interface WEB
+                 //Esta es la gran magia
+                 //llamo a la clase que me crea la vista 
+                 view::render($result);
+            }else{
             print_r("<br>");
             print_r("Invalid Action :(");
             }
@@ -28,21 +49,17 @@ class frontController
         public function dispatcher($action, $params)
     {
         $filename = ACTIONS . $action .".php";
-       // print_r($filename);
-       // print_r("<br>");
-       // print_r("punto 1");
-       // print_r("<br>");
+       
 
         if (is_file($filename)){
             require_once $filename;
-            //print_r($action);
 
             if (!class_exists($action)) {
                 echo "clase no existeeee";
             }else// si existe
             {
                 $cmd = new $action();
-                $cmd->execute($params);
+                return $cmd->execute($params);
             }
         }else 
             echo "<br> archivo no existe";
