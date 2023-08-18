@@ -16,32 +16,27 @@ class frontController
             if ($view=="api")
             {
                 define("SENTINEL",true);
-
             }
             else{
 
                 define("SENTINEL",FALSE);
             }
-            $COMPLEMENTO = $myUrl;
+            //$COMPLEMENTO = $myUrl;
             $this->action = array_shift($myUrl);
             $this->params = $myUrl;
-            $resuslt=$this->dispatcher($this->action,$this->params);
-
-
-            if($resuslt["result"] == "fail")
+            $result=$this->dispatcher($this->action,$this->params);
+            if($result["result"]=="fail")
             {
-                $result["view"] = "defaulError";
+                $result["view"]=="defaulError";
+                 
             }
-
             if(SENTINEL)
             print_r(json_encode($result));
-            else //Es un famado para interface WEB
-                 //Esta es la gran magia
-                 //llamo a la clase que me crea la vista 
-                 view::render($result);
-            }else{
-            print_r("<br>");
-            print_r("Invalid Action :(");
+            else 
+            view::render($result);
+            
+        }else {
+                print_r("Invalid Action :(");
             }
         }
 
@@ -49,8 +44,6 @@ class frontController
         public function dispatcher($action, $params)
     {
         $filename = ACTIONS . $action .".php";
-       
-
         if (is_file($filename)){
             require_once $filename;
 
